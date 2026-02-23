@@ -58,6 +58,8 @@ const translations = {
     "gameOver.replay": "🔄 Replay",
     "gameOver.nextLevel": "➡️ Next Level",
     "gameOver.deepDive": "📘 Topic + Game Link",
+    "stars.label": "Stars: {score}",
+    "score.total": "Total Score: {score}",
 
     "postLevel.title": "🧠 Jaggu's Super Brain Mode!",
     "postLevel.subtitle": "One idea, two worlds: classroom math and jungle adventure.",
@@ -157,6 +159,8 @@ const translations = {
     "gameOver.replay": "🔄 फिर से खेलो",
     "gameOver.nextLevel": "➡️ अगला लेवल",
     "gameOver.deepDive": "📘 टॉपिक + गेम लिंक",
+    "stars.label": "स्टार्स: {score}",
+    "score.total": "कुल स्कोर: {score}",
 
     "postLevel.title": "🧠 जग्गू का सुपर ब्रेन मोड!",
     "postLevel.subtitle": "एक ही आइडिया, दो दुनिया: क्लासरूम मैथ और जंगल गेम।",

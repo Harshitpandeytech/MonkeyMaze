@@ -3,6 +3,8 @@ import { TranslateFn } from "@/lib/i18n";
 
 interface PostLevelInsightsProps {
   onStartOver: () => void;
+  starsScore: string;
+  totalScore: string;
   t: TranslateFn;
 }
 
@@ -15,7 +17,7 @@ const cardVariants = {
   }),
 };
 
-const PostLevelInsights = ({ onStartOver, t }: PostLevelInsightsProps) => {
+const PostLevelInsights = ({ onStartOver, starsScore, totalScore, t }: PostLevelInsightsProps) => {
   const points = [
     t("postLevel.point.1"),
     t("postLevel.point.2"),
@@ -69,6 +71,24 @@ const PostLevelInsights = ({ onStartOver, t }: PostLevelInsightsProps) => {
         >
           {t("postLevel.subtitle")}
         </motion.p>
+
+        <motion.div
+          className="mx-auto mb-6 w-fit rounded-xl bg-secondary/20 border border-secondary/40 px-5 py-2 text-secondary font-bold"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.4 }}
+        >
+          ⭐ {t("stars.label", { score: starsScore })}
+        </motion.div>
+
+        <motion.div
+          className="mx-auto mb-6 w-fit rounded-xl bg-primary/20 border border-primary/40 px-5 py-2 text-primary font-bold"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+        >
+          🏆 {t("score.total", { score: totalScore })}
+        </motion.div>
 
         <div className="grid gap-3 md:gap-4">
           {points.map((point, index) => (

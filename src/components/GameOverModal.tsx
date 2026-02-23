@@ -16,6 +16,8 @@ interface GameOverModalProps {
   onShowPostLevel: () => void;
   onShowTeaching: () => void;
   hasNextLevel: boolean;
+  starsScore: string;
+  totalScore: string;
   t: TranslateFn;
 }
 
@@ -32,6 +34,8 @@ const GameOverModal = ({
   onShowPostLevel,
   onShowTeaching,
   hasNextLevel,
+  starsScore,
+  totalScore,
   t,
 }: GameOverModalProps) => {
   if (!show) return null;
@@ -121,6 +125,26 @@ const GameOverModal = ({
 
           {/* Buttons */}
           <div className="flex flex-col gap-3">
+            {!hasNextLevel && !isLost && level.id === 4 && (
+              <motion.div
+                className="rounded-xl bg-secondary/20 border border-secondary/40 py-2 px-3 font-bold text-secondary"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35 }}
+              >
+                ⭐ {t("stars.label", { score: starsScore })}
+              </motion.div>
+            )}
+            {!hasNextLevel && !isLost && level.id === 4 && (
+              <motion.div
+                className="rounded-xl bg-primary/20 border border-primary/40 py-2 px-3 font-bold text-primary"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                🏆 {t("score.total", { score: totalScore })}
+              </motion.div>
+            )}
             <motion.button
               onClick={onShowTeaching}
               className="w-full px-4 py-3 rounded-xl bg-accent text-accent-foreground font-semibold text-lg cursor-pointer border-none"

@@ -21,6 +21,7 @@ const Index = () => {
   const [screen, setScreen] = useState<Screen>("start");
   const [currentLevel, setCurrentLevel] = useState<Level>(levels[0]);
   const [completedLevels, setCompletedLevels] = useState<number[]>([]);
+  const [optimalLevels, setOptimalLevels] = useState<number[]>([]);
 
   // Game state
   const [visitedPath, setVisitedPath] = useState<string[]>([]);
@@ -84,6 +85,20 @@ const Index = () => {
         if (!completedLevels.includes(currentLevel.id)) {
           setCompletedLevels((prev) => [...prev, currentLevel.id]);
         }
+
+        const currentOptimalPath = getOptimalPath(
+          currentLevel.edges,
+          currentLevel.startNode,
+          currentLevel.goalNode,
+          currentLevel.timeLimit
+        );
+
+        if (currentOptimalPath && newEnergy === currentOptimalPath.totalCost) {
+          setOptimalLevels((prev) =>
+            prev.includes(currentLevel.id) ? prev : [...prev, currentLevel.id]
+          );
+        }
+
         setTimeout(() => setShowGameOver(true), 800);
       }
     },
@@ -116,6 +131,7 @@ const Index = () => {
 
   const handleStartOver = useCallback(() => {
     setCompletedLevels([]);
+    setOptimalLevels([]);
     setCurrentLevel(levels[0]);
     setVisitedPath([]);
     setEnergySpent(0);
@@ -134,6 +150,9 @@ const Index = () => {
   );
 
   const hasNextLevel = levels.findIndex((l) => l.id === currentLevel.id) < levels.length - 1;
+  const allLevelsOptimal = levels.every((level) => optimalLevels.includes(level.id));
+  const totalScore = allLevelsOptimal ? 20 : 10;
+  const starsScore = `${totalScore}/20`;
 
   const levelName = t(`level.${currentLevel.id}.name`);
 
@@ -179,7 +198,12 @@ const Index = () => {
         >
           {t("language.toggle")}
         </button>
-        <PostLevelInsights onStartOver={handleStartOver} t={t} />
+        <PostLevelInsights
+          onStartOver={handleStartOver}
+          starsScore={starsScore}
+          totalScore={starsScore}
+          t={t}
+        />
       </div>
     );
   }
@@ -259,6 +283,8 @@ const Index = () => {
           setShowTeaching(true);
         }}
         hasNextLevel={hasNextLevel}
+        starsScore={starsScore}
+        totalScore={starsScore}
         t={t}
       />
 
